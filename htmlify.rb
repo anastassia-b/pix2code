@@ -26,7 +26,7 @@ class Node
   NO_CHILDREN = ["btn-active", "btn-inactive", "btn-green", "btn-orange", "btn-red", "big-title", "small-title", "text"]
 
   def self.compile(dsl_source)
-    tokens = dsl_source.split(/,\s*|\s/)
+    tokens = dsl_source.split(/,\s*|\s+/)
     root = Node.new("body")
     self.build_tree(root, tokens)
     root.generate
@@ -94,30 +94,31 @@ end
 # "header { btn-inactive, btn-inactive, btn-inactive, btn-active, btn-inactive }"
 
 # source = "btn-inactive, btn-inactive, btn-inactive, btn-active, btn-inactive"
-source = "header { btn-inactive, btn-inactive, btn-inactive, btn-active, btn-inactive }"
-# source =
-# "header {
-# btn-inactive, btn-active, btn-inactive, btn-inactive, btn-inactive
-# }
-# row {
-# quadruple {
-# small-title, text, btn-orange
-# }
-# quadruple {
-# small-title, text, btn-red
-# }
-# quadruple {
-# small-title, text, btn-green
-# }
-# quadruple {
-# small-title, text, btn-orange
-# }
-# }
-# row {
-# single {
-# small-title, text, btn-green
-# }
-# }"
+# source = "header { btn-inactive, btn-inactive, btn-inactive, btn-active, btn-inactive }"
+source =
+"""header {
+  btn-inactive, btn-active, btn-inactive, btn-inactive, btn-inactive
+}
+row {
+  quadruple {
+    small-title, text, btn-orange
+  }
+  quadruple {
+    small-title, text, btn-red
+  }
+  quadruple {
+    small-title, text, btn-green
+  }
+  quadruple {
+    small-title, text, btn-orange
+  }
+}
+row {
+  single {
+    small-title, text, btn-green
+  }
+}
+"""
 
 puts Node.compile(source)
 # node = Node.compile(source)
